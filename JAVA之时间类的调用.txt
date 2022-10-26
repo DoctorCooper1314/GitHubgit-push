@@ -1,0 +1,140 @@
+小北不会写Java  
+package javaapplication12;
+import java.util.Calendar;
+public class JavaApplication12 {
+
+   public static void main(String[] args) {
+       int i;
+       CS cs[]=new CS[2];
+       C arr[]=new C[4];
+       arr[0]=new C("C",93);
+       arr[1]=new C("N",65);
+       arr[2]=new C("W",91);
+       arr[3]=new C("K",65);
+       cs[0]=new CS(arr,"zhang sanfeng","1234455",2002,9);
+       cs[1]=new CS(arr,"li","1234455",2003,7);
+       cs[0].sort(cs[0].arr);
+       for(i=0;i<cs[0].arr.length;i++)
+           System.out.println(cs[0].arr[i].name+":"+cs[0].arr[i].cj);        
+       for(i=0;i<cs.length;i++)
+           if(cs[i].find_SubString(cs[i].mz,"zhang"))         
+              System.out.println("有张姓学生！");   
+       StringBuffer s1=new StringBuffer(cs[0].mz); 
+       cs[0].set_Upper(s1);
+       System.out.println(s1);  
+       System.out.println("他的名字有"+(cs[0].count(cs[0].mz)-cs[0].count_Blank(cs[0].mz))+"个字符"+"他的年龄为"+cs[0].get_Age()); 
+       System.out.println("最高成绩为："+cs[0].max(cs[0].arr));
+       }
+}
+
+class C{
+    int cj;
+    String name;
+    public C(String name,int cj){
+        this.cj=cj;
+        this.name=name;
+    }
+}
+
+class S{
+    int num;
+    String mz;
+    C arr[];
+    public S(C arr[],String mz){
+        this.arr=arr;
+        this.num=num;
+        this.mz=mz;
+    }
+    float avg(float a[])
+    {float ag=0;
+    for(int i=0;i<a.length;i++)
+        ag=ag+a[i];
+        ag=ag/a.length;
+    return ag;
+    }
+    public int max(C arr[])
+    {
+        int max=arr[0].cj;
+        for(int j=0;j<arr.length;j++)
+        {
+            if(arr[j].cj>max){
+                max=arr[j].cj;
+            }
+        }
+        return max;
+    }
+}
+
+class CS extends S{
+    char sex;
+    String str;
+    int year;
+    int month;
+    public CS(C arr[],String mz,String str,int year,int month){
+        super(arr,mz);
+        this.str=str;
+        this.mz=mz;
+        this.year = year;
+        this.month = month;
+    }
+    void sort(C arr[]){
+        int i,j;
+        C temp;
+        for(i=0;i<arr.length-1;i++)
+            for(j=arr.length-1;j>i;j--)
+                if(arr[j].cj<arr[j-1].cj){
+                    temp=arr[j];
+                    arr[j]=arr[j-1];
+                    arr[j-1]=temp;
+                }
+    }
+    
+    Boolean find_SubString(String str,String st){
+        if(str.indexOf(st)==-1)
+                return false;
+        else
+            return true;
+            
+    }
+    int count(String str){
+        return str.length();
+    }
+    
+    int count_Blank(String str){
+        int i,num=0;
+        for(i=0;i<str.length();i++)
+            if(str.charAt(i)==' ')
+                num++;
+        return num;
+    }
+    
+   void set_Upper(StringBuffer buf){
+        int len=buf.length();
+        int i;
+        if(len>0&&buf.charAt(0)>='a'&&buf.charAt(0)<='z')
+            buf.setCharAt(0,(char)(buf.charAt(0)-32));
+        for(i=1;i<len-1;i++)
+            if(buf.charAt(i)==' '){
+                i++;
+                if(buf.charAt(i)>='a'&&buf.charAt(i)<='z')
+                    buf.setCharAt(i,(char)(buf.charAt(i)-32));
+            }          
+    }
+   int get_Age(){
+       Calendar cal = Calendar.getInstance();//获取当前日期
+       int year1 = cal.get(Calendar.YEAR);
+       int month1 = cal.get(Calendar.MONTH);
+       int data1 = cal.get(Calendar.DATE);
+       if(year1-year>0){
+           int age = year1-year;
+            if(month>month1){
+                age--;
+            }        
+       return age;
+       }
+       else{
+           return 0;
+       }
+       
+}
+}
